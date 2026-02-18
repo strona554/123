@@ -4,105 +4,187 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hoodies - LUZARA</title>
+
 <style>
-  body{margin:0;font-family:Arial;background:#111;color:white;}
-  header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;position:sticky;top:0}
-  header a{color:white;text-decoration:none;margin-left:20px;opacity:.9}
-  header a:hover{opacity:1}
-  .wrap{max-width:1100px;margin:0 auto;padding:40px}
-  h2{margin:0 0 18px}
-  .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
-  .product{background:#1a1a1a;padding:18px;text-align:center;border-radius:14px}
-  .product img{width:100%;border-radius:12px;height:320px;object-fit:cover}
-  .muted{opacity:.85;font-size:14px;margin:6px 0 10px}
-  .row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:8px}
-  select{padding:10px 12px;border-radius:10px;border:1px solid #333;background:#111;color:white}
-  .btn{margin-top:10px;padding:10px 16px;background:white;color:black;border:0;border-radius:10px;cursor:pointer;font-weight:bold}
-  .btn2{margin-top:10px;margin-left:8px;padding:10px 16px;background:#222;color:white;border:1px solid #333;border-radius:10px;cursor:pointer;font-weight:bold}
-  .btn:hover{background:#ddd}
-  .btn2:hover{background:#2a2a2a}
-  footer{text-align:center;padding:40px;background:black;margin-top:60px;font-size:13px;opacity:.7}
+body{margin:0;font-family:Arial;background:#111;color:white;}
+header{
+display:flex;justify-content:space-between;align-items:center;
+padding:20px 40px;background:black;position:sticky;top:0;
+}
+header a{color:white;text-decoration:none;margin-left:20px;opacity:.9}
+header a:hover{opacity:1}
+
+.wrap{max-width:1200px;margin:0 auto;padding:40px}
+h2{margin:0 0 30px}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
+
+.product{
+background:#1a1a1a;
+padding:18px;
+text-align:center;
+border-radius:14px;
+transition:0.3s;
+}
+.product:hover{transform:translateY(-5px)}
+
+.product img{
+width:100%;
+height:320px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.muted{opacity:.8;font-size:14px;margin:6px 0 10px}
+
+.row{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
+select{
+padding:8px 10px;
+border-radius:8px;
+border:1px solid #333;
+background:#111;
+color:white;
+}
+
+.btn{
+margin-top:10px;
+padding:10px 14px;
+background:white;
+color:black;
+border:0;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+footer{text-align:center;padding:40px;background:black;margin-top:60px;font-size:13px;opacity:.7}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>LUZARA</h1>
-  <div>
-    <a href="./index.html">Home</a>
-    <a href="./tshirts.html">T-Shirts</a>
-    <a href="./cart.html">Cart (<span id="cartCount">0</span>)</a>
-  </div>
+<h1>LUZARA</h1>
+<div>
+<a href="./index.html">Home</a>
+<a href="./tshirts.html">T-Shirts</a>
+<a href="./cart.html">Cart (<span id="cartCount">0</span>)</a>
+</div>
 </header>
 
 <div class="wrap">
-  <h2>Hoodies</h2>
+<h2>Hoodies Collection</h2>
 
-  <section class="products">
+<section class="products">
 
-    <div class="product" data-name="Oversized Black Hoodie" data-price="79"
-         data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
-      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="">
-      <h3>Oversized Black Hoodie</h3>
-      <div class="muted">$79.00</div>
+<!-- PRODUCT TEMPLATE (6x) -->
 
-      <div class="row">
-        <span class="muted">Size</span>
-        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      </div>
+<div class="product" data-name="Black Essential Hoodie" data-price="79"
+data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
+<h3>Black Essential Hoodie</h3>
+<div class="muted">$79.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
 
-      <button class="btn" onclick="addFromCard(this)">Add to cart</button>
-      <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
-    </div>
+<div class="product" data-name="Grey Street Hoodie" data-price="89"
+data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
+<h3>Grey Street Hoodie</h3>
+<div class="muted">$89.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
 
-    <div class="product" data-name="Grey Street Hoodie" data-price="89"
-         data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
-      <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80" alt="">
-      <h3>Grey Street Hoodie</h3>
-      <div class="muted">$89.00</div>
+<div class="product" data-name="Beige Minimal Hoodie" data-price="84"
+data-img="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
+<h3>Beige Minimal Hoodie</h3>
+<div class="muted">$84.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
 
-      <div class="row">
-        <span class="muted">Size</span>
-        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      </div>
+<div class="product" data-name="White Clean Hoodie" data-price="75"
+data-img="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
+<h3>White Clean Hoodie</h3>
+<div class="muted">$75.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
 
-      <button class="btn" onclick="addFromCard(this)">Add to cart</button>
-      <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
-    </div>
+<div class="product" data-name="Dark Brown Hoodie" data-price="92"
+data-img="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
+<h3>Dark Brown Hoodie</h3>
+<div class="muted">$92.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
 
-  </section>
+<div class="product" data-name="Olive Urban Hoodie" data-price="88"
+data-img="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
+<img src="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
+<h3>Olive Urban Hoodie</h3>
+<div class="muted">$88.00</div>
+<div class="row">
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+</div>
+<button class="btn" onclick="addFromCard(this)">Add to cart</button>
+</div>
+
+</section>
 </div>
 
 <footer>© 2026 LUZARA</footer>
 
 <script>
-  function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
-  function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
-  function updateCount(){ document.getElementById("cartCount").textContent = getCart().reduce((s,i)=>s+i.qty,0); }
-  function keyFor(name,size){ return name + " | " + size; }
+function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
+function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
+function updateCount(){ document.getElementById("cartCount").textContent = getCart().reduce((s,i)=>s+i.qty,0); }
 
-  function addItem(name, price, img, size){
-    const cart = getCart();
-    const key = keyFor(name,size);
-    const found = cart.find(x => x.key === key);
-    if(found) found.qty += 1;
-    else cart.push({key,name,size,price:Number(price),img,qty:1});
-    setCart(cart); updateCount();
-  }
+function addFromCard(btn){
+const card = btn.closest(".product");
+const name = card.dataset.name;
+const price = card.dataset.price;
+const img = card.dataset.img;
+const size = card.querySelector("select").value;
 
-  function addFromCard(btn){
-    const card = btn.closest(".product");
-    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
-    alert("Added to cart ✅");
-  }
+let cart = getCart();
+const key = name + "|" + size;
+const found = cart.find(x => x.key === key);
 
-  function buyFromCard(btn){
-    const card = btn.closest(".product");
-    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
-    window.location.href = "./cart.html";
-  }
+if(found){ found.qty += 1; }
+else{ cart.push({key,name,size,price:Number(price),img,qty:1}); }
 
-  updateCount();
+setCart(cart);
+updateCount();
+alert("Added to cart ✅");
+}
+
+updateCount();
 </script>
 
 </body>
