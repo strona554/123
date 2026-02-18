@@ -6,182 +6,188 @@
 <title>Hoodies - LUZARA</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#111;color:white;}
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:20px 40px;background:black;position:sticky;top:0;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#111;
+  color:white;
 }
-header a{color:white;text-decoration:none;margin-left:20px;opacity:.9}
-header a:hover{opacity:1}
 
-.wrap{max-width:1200px;margin:0 auto;padding:40px}
-h2{margin:0 0 30px}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  background:black;
+}
+
+header a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:40px;
+}
 
 .products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
 }
 
-.product{
-background:#1a1a1a;
-padding:18px;
-text-align:center;
-border-radius:14px;
-transition:0.3s;
-}
-.product:hover{transform:translateY(-5px)}
-
-.product img{
-width:100%;
-height:320px;
-object-fit:cover;
-border-radius:12px;
+.card{
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
 }
 
-.muted{opacity:.8;font-size:14px;margin:6px 0 10px}
-
-.row{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-margin-top:10px;
+.card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  border-radius:10px;
 }
 
 select{
-padding:8px 10px;
-border-radius:8px;
-border:1px solid #333;
-background:#111;
-color:white;
+  margin-top:10px;
+  padding:8px;
+  background:#111;
+  color:white;
+  border:1px solid #333;
+  border-radius:6px;
 }
 
-.btn{
-margin-top:10px;
-padding:10px 14px;
-background:white;
-color:black;
-border:0;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
+button{
+  margin-top:10px;
+  padding:10px 15px;
+  background:white;
+  color:black;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
-footer{text-align:center;padding:40px;background:black;margin-top:60px;font-size:13px;opacity:.7}
+footer{
+  text-align:center;
+  padding:40px;
+  background:black;
+  margin-top:60px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>LUZARA</h1>
-<div>
-<a href="./index.html">Home</a>
-<a href="./tshirts.html">T-Shirts</a>
-<a href="./cart.html">Cart (<span id="cartCount">0</span>)</a>
-</div>
+  <h1>LUZARA</h1>
+  <div>
+    <a href="./index.html">Home</a>
+    <a href="./tshirts.html">T-Shirts</a>
+    <a href="./cart.html">Cart (<span id="count">0</span>)</a>
+  </div>
 </header>
 
-<div class="wrap">
-<h2>Hoodies Collection</h2>
+<div class="container">
+  <h2>Hoodies Collection</h2>
 
-<section class="products">
+  <div class="products">
 
-<!-- PRODUCT TEMPLATE (6x) -->
+    <!-- 1 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
+      <h3>Black Essential Hoodie</h3>
+      <p>$79</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'Black Essential Hoodie',79)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="Black Essential Hoodie" data-price="79"
-data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
-<h3>Black Essential Hoodie</h3>
-<div class="muted">$79.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
+    <!-- 2 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
+      <h3>Grey Street Hoodie</h3>
+      <p>$89</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'Grey Street Hoodie',89)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="Grey Street Hoodie" data-price="89"
-data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
-<h3>Grey Street Hoodie</h3>
-<div class="muted">$89.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
+    <!-- 3 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
+      <h3>Beige Minimal Hoodie</h3>
+      <p>$84</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'Beige Minimal Hoodie',84)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="Beige Minimal Hoodie" data-price="84"
-data-img="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
-<h3>Beige Minimal Hoodie</h3>
-<div class="muted">$84.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
+    <!-- 4 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
+      <h3>White Clean Hoodie</h3>
+      <p>$75</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'White Clean Hoodie',75)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="White Clean Hoodie" data-price="75"
-data-img="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
-<h3>White Clean Hoodie</h3>
-<div class="muted">$75.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
+    <!-- 5 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
+      <h3>Dark Brown Hoodie</h3>
+      <p>$92</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'Dark Brown Hoodie',92)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="Dark Brown Hoodie" data-price="92"
-data-img="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
-<h3>Dark Brown Hoodie</h3>
-<div class="muted">$92.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
+    <!-- 6 -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
+      <h3>Olive Urban Hoodie</h3>
+      <p>$88</p>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <button onclick="add(this,'Olive Urban Hoodie',88)">Add to cart</button>
+    </div>
 
-<div class="product" data-name="Olive Urban Hoodie" data-price="88"
-data-img="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
-<img src="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
-<h3>Olive Urban Hoodie</h3>
-<div class="muted">$88.00</div>
-<div class="row">
-<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-</div>
-<button class="btn" onclick="addFromCard(this)">Add to cart</button>
-</div>
-
-</section>
+  </div>
 </div>
 
 <footer>© 2026 LUZARA</footer>
 
 <script>
-function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
-function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
-function updateCount(){ document.getElementById("cartCount").textContent = getCart().reduce((s,i)=>s+i.qty,0); }
+function getCart(){
+  return JSON.parse(localStorage.getItem("cart") || "[]");
+}
 
-function addFromCard(btn){
-const card = btn.closest(".product");
-const name = card.dataset.name;
-const price = card.dataset.price;
-const img = card.dataset.img;
-const size = card.querySelector("select").value;
+function setCart(data){
+  localStorage.setItem("cart", JSON.stringify(data));
+}
 
-let cart = getCart();
-const key = name + "|" + size;
-const found = cart.find(x => x.key === key);
+function updateCount(){
+  const cart = getCart();
+  document.getElementById("count").innerText =
+    cart.reduce((total,item)=>total+item.qty,0);
+}
 
-if(found){ found.qty += 1; }
-else{ cart.push({key,name,size,price:Number(price),img,qty:1}); }
+function add(btn,name,price){
+  const size = btn.parentElement.querySelector("select").value;
+  let cart = getCart();
 
-setCart(cart);
-updateCount();
-alert("Added to cart ✅");
+  const key = name + size;
+  const existing = cart.find(item=>item.key===key);
+
+  if(existing){
+    existing.qty++;
+  } else {
+    cart.push({key,name,size,price,qty:1});
+  }
+
+  setCart(cart);
+  updateCount();
+  alert("Added to cart ✅");
 }
 
 updateCount();
