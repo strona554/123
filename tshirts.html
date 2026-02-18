@@ -17,8 +17,8 @@
   .muted{opacity:.85;font-size:14px;margin:6px 0 10px}
   .row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:8px}
   select{padding:10px 12px;border-radius:10px;border:1px solid #333;background:#111;color:white}
-  .btn{display:inline-block;margin-top:10px;padding:10px 16px;background:white;color:black;border:0;border-radius:10px;cursor:pointer;font-weight:bold}
-  .btn2{display:inline-block;margin-top:10px;margin-left:8px;padding:10px 16px;background:#222;color:white;border:1px solid #333;border-radius:10px;cursor:pointer;font-weight:bold}
+  .btn{margin-top:10px;padding:10px 16px;background:white;color:black;border:0;border-radius:10px;cursor:pointer;font-weight:bold}
+  .btn2{margin-top:10px;margin-left:8px;padding:10px 16px;background:#222;color:white;border:1px solid #333;border-radius:10px;cursor:pointer;font-weight:bold}
   .btn:hover{background:#ddd}
   .btn2:hover{background:#2a2a2a}
   footer{text-align:center;padding:40px;background:black;margin-top:60px;font-size:13px;opacity:.7}
@@ -29,9 +29,9 @@
 <header>
   <h1>LUZARA</h1>
   <div>
-    <a href="index.html">Home</a>
-    <a href="hoodies.html">Hoodies</a>
-    <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+    <a href="./index.html">Home</a>
+    <a href="./hoodies.html">Hoodies</a>
+    <a href="./cart.html">Cart (<span id="cartCount">0</span>)</a>
   </div>
 </header>
 
@@ -99,7 +99,7 @@
   function buyFromCard(btn){
     const card = btn.closest(".product");
     addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
-    window.location.href = "cart.html";
+    window.location.href = "./cart.html";
   }
 
   updateCount();
