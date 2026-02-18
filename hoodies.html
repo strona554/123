@@ -4,73 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hoodies - LUZARA</title>
-
 <style>
-body{margin:0;font-family:Arial;background:#111;color:white;}
-header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;}
-header a{color:white;text-decoration:none;margin-left:20px;}
-
-.products{
-padding:60px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-}
-
-.product{
-background:#1a1a1a;
-padding:20px;
-text-align:center;
-border-radius:12px;
-}
-
-.product img{width:100%;border-radius:12px;}
-
-.btn{
-display:inline-block;
-margin-top:15px;
-padding:10px 25px;
-background:white;
-color:black;
-text-decoration:none;
-font-weight:bold;
-}
-
-footer{text-align:center;padding:40px;background:black;margin-top:60px;}
+  body{margin:0;font-family:Arial;background:#111;color:white;}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;}
+  header a{color:white;text-decoration:none;margin-left:20px;}
+  .products{padding:60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;}
+  .product{background:#1a1a1a;padding:20px;text-align:center;border-radius:12px;}
+  .product img{width:100%;border-radius:12px;}
+  .btn{display:inline-block;margin-top:12px;padding:10px 18px;background:white;color:black;border:0;border-radius:10px;cursor:pointer;font-weight:bold;}
+  .muted{opacity:.85;font-size:14px;}
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>LUZARA</h1>
-<div>
-<a href="index.html">Home</a>
-<a href="tshirts.html">T-Shirts</a>
-</div>
+  <h1>LUZARA</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">T-Shirts</a>
+    <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+  </div>
 </header>
 
 <section class="products">
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80">
-<h3>Oversized Black Hoodie</h3>
-<p>€79</p>
-<a class="btn" href="#">Buy Now</a>
-</div>
+  <div class="product">
+    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80" alt="">
+    <h3>Oversized Black Hoodie</h3>
+    <p class="muted">$79.00</p>
+    <button class="btn" onclick="addToCart('Oversized Black Hoodie', 79, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80')">Add to cart</button>
+  </div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=800&q=80">
-<h3>Grey Street Hoodie</h3>
-<p>€89</p>
-<a class="btn" href="#">Buy Now</a>
-</div>
+  <div class="product">
+    <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=800&q=80" alt="">
+    <h3>Grey Street Hoodie</h3>
+    <p class="muted">$89.00</p>
+    <button class="btn" onclick="addToCart('Grey Street Hoodie', 89, 'https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=800&q=80')">Add to cart</button>
+  </div>
 
 </section>
 
-<footer>
-© 2026 LUZARA
-</footer>
+<script>
+  function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
+  function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
+  function updateCount(){
+    const cart = getCart();
+    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
+  }
+  function addToCart(name, price, img){
+    const cart = getCart();
+    const found = cart.find(x => x.name === name);
+    if(found) found.qty += 1;
+    else cart.push({name, price, img, qty:1});
+    setCart(cart);
+    updateCount();
+    alert("Added to cart ✅");
+  }
+  updateCount();
+</script>
 
 </body>
 </html>
