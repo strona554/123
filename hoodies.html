@@ -40,32 +40,30 @@
 
   <section class="products">
 
-    <div class="product" data-name="Oversized Black Hoodie" data-price="79" data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
+    <div class="product" data-name="Oversized Black Hoodie" data-price="79"
+         data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>Oversized Black Hoodie</h3>
       <div class="muted">$79.00</div>
 
       <div class="row">
-        <label for="size1" class="muted">Size</label>
-        <select id="size1">
-          <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
+        <span class="muted">Size</span>
+        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       </div>
 
       <button class="btn" onclick="addFromCard(this)">Add to cart</button>
       <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
     </div>
 
-    <div class="product" data-name="Grey Street Hoodie" data-price="89" data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
+    <div class="product" data-name="Grey Street Hoodie" data-price="89"
+         data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>Grey Street Hoodie</h3>
       <div class="muted">$89.00</div>
 
       <div class="row">
-        <label for="size2" class="muted">Size</label>
-        <select id="size2">
-          <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
+        <span class="muted">Size</span>
+        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       </div>
 
       <button class="btn" onclick="addFromCard(this)">Add to cart</button>
@@ -80,50 +78,28 @@
 <script>
   function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
   function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
-  function updateCount(){
-    const cart = getCart();
-    const el = document.getElementById("cartCount");
-    if(el) el.textContent = cart.reduce((s,i)=>s+i.qty,0);
-  }
-  function keyFor(name, size){ return name + " | " + size; }
+  function updateCount(){ document.getElementById("cartCount").textContent = getCart().reduce((s,i)=>s+i.qty,0); }
+  function keyFor(name,size){ return name + " | " + size; }
 
-  function addToCart(name, price, img, size){
+  function addItem(name, price, img, size){
     const cart = getCart();
-    const k = keyFor(name,size);
-    const found = cart.find(x => x.key === k);
+    const key = keyFor(name,size);
+    const found = cart.find(x => x.key === key);
     if(found) found.qty += 1;
-    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
-    setCart(cart);
-    updateCount();
-    alert("Added to cart ✅");
-  }
-
-  function buyNow(name, price, img, size){
-    const cart = getCart();
-    const k = keyFor(name,size);
-    const found = cart.find(x => x.key === k);
-    if(found) found.qty += 1;
-    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
-    setCart(cart);
-    window.location.href = "cart.html";
+    else cart.push({key,name,size,price:Number(price),img,qty:1});
+    setCart(cart); updateCount();
   }
 
   function addFromCard(btn){
     const card = btn.closest(".product");
-    const name = card.dataset.name;
-    const price = card.dataset.price;
-    const img = card.dataset.img;
-    const size = card.querySelector("select").value;
-    addToCart(name, price, img, size);
+    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
+    alert("Added to cart ✅");
   }
 
   function buyFromCard(btn){
     const card = btn.closest(".product");
-    const name = card.dataset.name;
-    const price = card.dataset.price;
-    const img = card.dataset.img;
-    const size = card.querySelector("select").value;
-    buyNow(name, price, img, size);
+    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
+    window.location.href = "cart.html";
   }
 
   updateCount();
