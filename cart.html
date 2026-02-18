@@ -57,7 +57,7 @@
 <script>
   function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
   function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
-  function formatMoney(n){ return "$" + Number(n).toFixed(2); }
+  function money(n){ return "$" + Number(n).toFixed(2); }
 
   function render(){
     const cart = getCart();
@@ -84,7 +84,7 @@
           <img src="${item.img}" alt="">
           <div>
             <div><b>${item.name}</b></div>
-            <div class="muted">Size: ${item.size} • ${formatMoney(item.price)} each</div>
+            <div class="muted">Size: ${item.size} • ${money(item.price)} each</div>
           </div>
         </div>
         <div style="display:flex; gap:10px; align-items:center;">
@@ -97,36 +97,28 @@
       list.appendChild(div);
     });
 
-    document.getElementById("totalPrice").textContent = formatMoney(total);
+    document.getElementById("totalPrice").textContent = money(total);
   }
 
   document.addEventListener("click", (e)=>{
     const btn = e.target.closest("button");
     if(!btn) return;
 
-    if(btn.id === "clearBtn"){
-      setCart([]);
-      render();
-      return;
-    }
-
-    if(btn.id === "checkoutBtn"){
-      alert("Demo checkout ✅ (no payment).");
-      return;
-    }
+    if(btn.id === "clearBtn"){ setCart([]); render(); return; }
+    if(btn.id === "checkoutBtn"){ alert("Demo checkout ✅ (no payment)."); return; }
 
     const action = btn.getAttribute("data-action");
     if(!action) return;
 
     const idx = Number(btn.getAttribute("data-idx"));
-    let cart = getCart();
+    const cart = getCart();
 
-    if(action === "inc"){ cart[idx].qty += 1; }
+    if(action === "inc") cart[idx].qty += 1;
     if(action === "dec"){
       cart[idx].qty -= 1;
       if(cart[idx].qty <= 0) cart.splice(idx,1);
     }
-    if(action === "remove"){ cart.splice(idx,1); }
+    if(action === "remove") cart.splice(idx,1);
 
     setCart(cart);
     render();
