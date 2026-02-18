@@ -6,78 +6,92 @@
 <title>Hoodies - LUZARA</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#111;
-  color:white;
-}
+body{margin:0;font-family:Arial;background:#111;color:white;}
 
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  background:black;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:black;
+position:sticky;
+top:0;
 }
 
 header a{
-  color:white;
-  text-decoration:none;
-  margin-left:20px;
+color:white;
+text-decoration:none;
+margin-left:20px;
+opacity:.9;
 }
 
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:40px;
+header a:hover{opacity:1;}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:40px;
 }
+
+h2{margin-bottom:30px;}
 
 .products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
 }
 
-.card{
-  background:#1a1a1a;
-  padding:15px;
-  border-radius:12px;
-  text-align:center;
+.product{
+background:#1a1a1a;
+padding:18px;
+text-align:center;
+border-radius:14px;
+transition:.3s;
 }
 
-.card img{
-  width:100%;
-  height:300px;
-  object-fit:cover;
-  border-radius:10px;
+.product:hover{
+transform:translateY(-5px);
+}
+
+.product img{
+width:100%;
+height:320px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.price{
+opacity:.8;
+margin:6px 0 10px;
 }
 
 select{
-  margin-top:10px;
-  padding:8px;
-  background:#111;
-  color:white;
-  border:1px solid #333;
-  border-radius:6px;
+padding:8px 10px;
+border-radius:8px;
+border:1px solid #333;
+background:#111;
+color:white;
+margin-top:8px;
 }
 
 button{
-  margin-top:10px;
-  padding:10px 15px;
-  background:white;
-  color:black;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:bold;
+margin-top:10px;
+padding:10px 15px;
+background:white;
+color:black;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
 }
 
 footer{
-  text-align:center;
-  padding:40px;
-  background:black;
-  margin-top:60px;
+text-align:center;
+padding:40px;
+background:black;
+margin-top:60px;
+font-size:13px;
+opacity:.7;
 }
 </style>
 </head>
@@ -85,109 +99,109 @@ footer{
 <body>
 
 <header>
-  <h1>LUZARA</h1>
-  <div>
-    <a href="./index.html">Home</a>
-    <a href="./tshirts.html">T-Shirts</a>
-    <a href="./cart.html">Cart (<span id="count">0</span>)</a>
-  </div>
+<h1>LUZARA</h1>
+<div>
+<a href="./index.html">Home</a>
+<a href="./tshirts.html">T-Shirts</a>
+<a href="./cart.html">Cart (<span id="cartCount">0</span>)</a>
+</div>
 </header>
 
-<div class="container">
-  <h2>Hoodies Collection</h2>
+<div class="wrap">
+<h2>Hoodies Collection</h2>
 
-  <div class="products">
+<div class="products">
 
-    <!-- 1 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
-      <h3>Black Essential Hoodie</h3>
-      <p>$79</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'Black Essential Hoodie',79)">Add to cart</button>
-    </div>
+<!-- 1 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
+<h3>Black Essential Hoodie</h3>
+<div class="price">$79</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'Black Essential Hoodie',79)">Add to cart</button>
+</div>
 
-    <!-- 2 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
-      <h3>Grey Street Hoodie</h3>
-      <p>$89</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'Grey Street Hoodie',89)">Add to cart</button>
-    </div>
+<!-- 2 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
+<h3>Grey Street Hoodie</h3>
+<div class="price">$89</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'Grey Street Hoodie',89)">Add to cart</button>
+</div>
 
-    <!-- 3 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
-      <h3>Beige Minimal Hoodie</h3>
-      <p>$84</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'Beige Minimal Hoodie',84)">Add to cart</button>
-    </div>
+<!-- 3 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=80">
+<h3>Beige Minimal Hoodie</h3>
+<div class="price">$84</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'Beige Minimal Hoodie',84)">Add to cart</button>
+</div>
 
-    <!-- 4 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
-      <h3>White Clean Hoodie</h3>
-      <p>$75</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'White Clean Hoodie',75)">Add to cart</button>
-    </div>
+<!-- 4 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&w=900&q=80">
+<h3>White Clean Hoodie</h3>
+<div class="price">$75</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'White Clean Hoodie',75)">Add to cart</button>
+</div>
 
-    <!-- 5 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
-      <h3>Dark Brown Hoodie</h3>
-      <p>$92</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'Dark Brown Hoodie',92)">Add to cart</button>
-    </div>
+<!-- 5 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=80">
+<h3>Dark Brown Hoodie</h3>
+<div class="price">$92</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'Dark Brown Hoodie',92)">Add to cart</button>
+</div>
 
-    <!-- 6 -->
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
-      <h3>Olive Urban Hoodie</h3>
-      <p>$88</p>
-      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-      <button onclick="add(this,'Olive Urban Hoodie',88)">Add to cart</button>
-    </div>
+<!-- 6 -->
+<div class="product">
+<img src="https://images.unsplash.com/photo-1620799139507-4d9b6f7c00b1?auto=format&fit=crop&w=900&q=80">
+<h3>Olive Urban Hoodie</h3>
+<div class="price">$88</div>
+<select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+<button onclick="addToCart(this,'Olive Urban Hoodie',88)">Add to cart</button>
+</div>
 
-  </div>
+</div>
 </div>
 
 <footer>© 2026 LUZARA</footer>
 
 <script>
 function getCart(){
-  return JSON.parse(localStorage.getItem("cart") || "[]");
+return JSON.parse(localStorage.getItem("cart") || "[]");
 }
 
-function setCart(data){
-  localStorage.setItem("cart", JSON.stringify(data));
+function setCart(cart){
+localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 function updateCount(){
-  const cart = getCart();
-  document.getElementById("count").innerText =
-    cart.reduce((total,item)=>total+item.qty,0);
+const cart = getCart();
+document.getElementById("cartCount").innerText =
+cart.reduce((sum,item)=>sum+item.qty,0);
 }
 
-function add(btn,name,price){
-  const size = btn.parentElement.querySelector("select").value;
-  let cart = getCart();
+function addToCart(btn,name,price){
+const size = btn.parentElement.querySelector("select").value;
+let cart = getCart();
 
-  const key = name + size;
-  const existing = cart.find(item=>item.key===key);
+const key = name + size;
+const existing = cart.find(item=>item.key===key);
 
-  if(existing){
-    existing.qty++;
-  } else {
-    cart.push({key,name,size,price,qty:1});
-  }
+if(existing){
+existing.qty++;
+}else{
+cart.push({key,name,size,price,qty:1});
+}
 
-  setCart(cart);
-  updateCount();
-  alert("Added to cart ✅");
+setCart(cart);
+updateCount();
+alert("Added to cart ✅");
 }
 
 updateCount();
