@@ -15,6 +15,8 @@
   .product{background:#1a1a1a;padding:18px;text-align:center;border-radius:14px}
   .product img{width:100%;border-radius:12px;height:320px;object-fit:cover}
   .muted{opacity:.85;font-size:14px;margin:6px 0 10px}
+  .row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:8px}
+  select{padding:10px 12px;border-radius:10px;border:1px solid #333;background:#111;color:white}
   .btn{display:inline-block;margin-top:10px;padding:10px 16px;background:white;color:black;border:0;border-radius:10px;cursor:pointer;font-weight:bold}
   .btn2{display:inline-block;margin-top:10px;margin-left:8px;padding:10px 16px;background:#222;color:white;border:1px solid #333;border-radius:10px;cursor:pointer;font-weight:bold}
   .btn:hover{background:#ddd}
@@ -38,20 +40,36 @@
 
   <section class="products">
 
-    <div class="product">
+    <div class="product" data-name="Oversized Black Hoodie" data-price="79" data-img="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>Oversized Black Hoodie</h3>
       <div class="muted">$79.00</div>
-      <button class="btn" onclick="addToCart('Oversized Black Hoodie', 79, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80')">Add to cart</button>
-      <button class="btn2" onclick="buyNow('Oversized Black Hoodie', 79, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80')">Buy now</button>
+
+      <div class="row">
+        <label for="size1" class="muted">Size</label>
+        <select id="size1">
+          <option>S</option><option>M</option><option>L</option><option>XL</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="addFromCard(this)">Add to cart</button>
+      <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
     </div>
 
-    <div class="product">
+    <div class="product" data-name="Grey Street Hoodie" data-price="89" data-img="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>Grey Street Hoodie</h3>
       <div class="muted">$89.00</div>
-      <button class="btn" onclick="addToCart('Grey Street Hoodie', 89, 'https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80')">Add to cart</button>
-      <button class="btn2" onclick="buyNow('Grey Street Hoodie', 89, 'https://images.unsplash.com/photo-1503342217505-b0a15cf70489?auto=format&fit=crop&w=900&q=80')">Buy now</button>
+
+      <div class="row">
+        <label for="size2" class="muted">Size</label>
+        <select id="size2">
+          <option>S</option><option>M</option><option>L</option><option>XL</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="addFromCard(this)">Add to cart</button>
+      <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
     </div>
 
   </section>
@@ -67,23 +85,47 @@
     const el = document.getElementById("cartCount");
     if(el) el.textContent = cart.reduce((s,i)=>s+i.qty,0);
   }
-  function addToCart(name, price, img){
+  function keyFor(name, size){ return name + " | " + size; }
+
+  function addToCart(name, price, img, size){
     const cart = getCart();
-    const found = cart.find(x => x.name === name);
+    const k = keyFor(name,size);
+    const found = cart.find(x => x.key === k);
     if(found) found.qty += 1;
-    else cart.push({name, price, img, qty:1});
+    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
     setCart(cart);
     updateCount();
     alert("Added to cart ✅");
   }
-  function buyNow(name, price, img){
+
+  function buyNow(name, price, img, size){
     const cart = getCart();
-    const found = cart.find(x => x.name === name);
+    const k = keyFor(name,size);
+    const found = cart.find(x => x.key === k);
     if(found) found.qty += 1;
-    else cart.push({name, price, img, qty:1});
+    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
     setCart(cart);
     window.location.href = "cart.html";
   }
+
+  function addFromCard(btn){
+    const card = btn.closest(".product");
+    const name = card.dataset.name;
+    const price = card.dataset.price;
+    const img = card.dataset.img;
+    const size = card.querySelector("select").value;
+    addToCart(name, price, img, size);
+  }
+
+  function buyFromCard(btn){
+    const card = btn.closest(".product");
+    const name = card.dataset.name;
+    const price = card.dataset.price;
+    const img = card.dataset.img;
+    const size = card.querySelector("select").value;
+    buyNow(name, price, img, size);
+  }
+
   updateCount();
 </script>
 
