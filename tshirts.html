@@ -40,32 +40,30 @@
 
   <section class="products">
 
-    <div class="product" data-name="White Minimal T-Shirt" data-price="39" data-img="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80">
+    <div class="product" data-name="White Minimal T-Shirt" data-price="39"
+         data-img="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>White Minimal T-Shirt</h3>
       <div class="muted">$39.00</div>
 
       <div class="row">
-        <label for="ts1" class="muted">Size</label>
-        <select id="ts1">
-          <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
+        <span class="muted">Size</span>
+        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       </div>
 
       <button class="btn" onclick="addFromCard(this)">Add to cart</button>
       <button class="btn2" onclick="buyFromCard(this)">Buy now</button>
     </div>
 
-    <div class="product" data-name="Black Classic T-Shirt" data-price="45" data-img="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=900&q=80">
+    <div class="product" data-name="Black Classic T-Shirt" data-price="45"
+         data-img="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=900&q=80">
       <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=900&q=80" alt="">
       <h3>Black Classic T-Shirt</h3>
       <div class="muted">$45.00</div>
 
       <div class="row">
-        <label for="ts2" class="muted">Size</label>
-        <select id="ts2">
-          <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
+        <span class="muted">Size</span>
+        <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
       </div>
 
       <button class="btn" onclick="addFromCard(this)">Add to cart</button>
@@ -80,50 +78,28 @@
 <script>
   function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
   function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
-  function updateCount(){
-    const cart = getCart();
-    const el = document.getElementById("cartCount");
-    if(el) el.textContent = cart.reduce((s,i)=>s+i.qty,0);
-  }
-  function keyFor(name, size){ return name + " | " + size; }
+  function updateCount(){ document.getElementById("cartCount").textContent = getCart().reduce((s,i)=>s+i.qty,0); }
+  function keyFor(name,size){ return name + " | " + size; }
 
-  function addToCart(name, price, img, size){
+  function addItem(name, price, img, size){
     const cart = getCart();
-    const k = keyFor(name,size);
-    const found = cart.find(x => x.key === k);
+    const key = keyFor(name,size);
+    const found = cart.find(x => x.key === key);
     if(found) found.qty += 1;
-    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
-    setCart(cart);
-    updateCount();
-    alert("Added to cart ✅");
-  }
-
-  function buyNow(name, price, img, size){
-    const cart = getCart();
-    const k = keyFor(name,size);
-    const found = cart.find(x => x.key === k);
-    if(found) found.qty += 1;
-    else cart.push({key:k, name, size, price:Number(price), img, qty:1});
-    setCart(cart);
-    window.location.href = "cart.html";
+    else cart.push({key,name,size,price:Number(price),img,qty:1});
+    setCart(cart); updateCount();
   }
 
   function addFromCard(btn){
     const card = btn.closest(".product");
-    const name = card.dataset.name;
-    const price = card.dataset.price;
-    const img = card.dataset.img;
-    const size = card.querySelector("select").value;
-    addToCart(name, price, img, size);
+    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
+    alert("Added to cart ✅");
   }
 
   function buyFromCard(btn){
     const card = btn.closest(".product");
-    const name = card.dataset.name;
-    const price = card.dataset.price;
-    const img = card.dataset.img;
-    const size = card.querySelector("select").value;
-    buyNow(name, price, img, size);
+    addItem(card.dataset.name, card.dataset.price, card.dataset.img, card.querySelector("select").value);
+    window.location.href = "cart.html";
   }
 
   updateCount();
