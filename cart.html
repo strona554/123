@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart - LUZARA</title>
+<style>
+  body{margin:0;font-family:Arial;background:#111;color:white;}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;}
+  header a{color:white;text-decoration:none;margin-left:20px;}
+  main{max-width:900px;margin:0 auto;padding:40px 20px;}
+  .row{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:16px;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:12px;background:#151515;}
+  .left{display:flex;gap:14px;align-items:center;}
+  img{width:90px;height:90px;object-fit:cover;border-radius:10px;}
+  button{padding:10px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:bold;}
+  .btn{background:white;color:black;}
+  .btn2{background:#222;color:white;border:1px solid #333;}
+  .muted{opacity:.8;font-size:14px;}
+  .total{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:18px;border-top:1px solid #2a2a2a;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LUZARA</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="hoodies.html">Hoodies</a>
+    <a href="tshirts.html">T-Shirts</a>
+    <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+  </div>
+</header>
+
+<main>
+  <h2>Your Cart</h2>
+  <p class="muted">Items are saved in your browser.</p>
+
+  <div id="cartList"></div>
+
+  <div class="total">
+    <h3>Total</h3>
+    <h3 id="totalPrice">$0</h3>
+  </div>
+
+  <div style="display:flex; gap:12px; margin-top:18px;">
+    <button class="btn2" id="clearBtn">Clear cart</button>
+    <button class="btn" id="checkoutBtn">Checkout</button>
+  </div>
+
+  <p class="muted" style="margin-top:12px;">Checkout is a demo (no payment).</p>
+</main>
+
+<script>
+  function getCart(){
+    return JSON.parse(localStorage.getItem("luzara_cart") || "[]");
+  }
+  function setCart(cart){
+    localStorage.setItem("luzara_cart", JSON.stringify(cart));
+  }
+  function formatMoney(n){
+    return "$" + Number(n).toFixed(2);
+  }
+
+  function render(){
+    const cart = getCart();
+    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
+
+    const list = document.getElementById("cartList");
+    list.innerHTML = "";
+
+    if(cart.length === 0){
+      list.innerHTML = `<div class="row"><div class="muted">Your cart is empty.</div></div>`;
+      document.getElementById("totalPrice").textContent = "$0.00";
+      return;
+    }
+
+    let total = 0;
+
+    cart.forEach((item, idx) => {
+      total += item.price * item.qty;
+
+      const div = document.createElement("div");
+      div.className = "row";
+      div.innerHTML = `
+        <div class="left">
+          <img src="${item.img}" alt="">
+          <div>
+            <div><b>${item.name}</b></div>
+            <div class="muted">${formatMoney(item.price)} each</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn2" data-action="dec" data-idx="${idx}">-</button>
+          <div style="min-width:28px;text-align:center;">${item.qty}</div>
+          <button class="btn2" data-action="inc" data-idx="${idx}">+</button>
+          <button class="btn2" data-action="remove" data-idx="${idx}">Remove</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+
+    document.getElementById("totalPrice").textContent = formatMoney(total);
+  }
+
+  document.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button");
+    if(!btn) return;
+
+    const action = btn.getAttribute("data-action");
+    const idx = Number(btn.getAttribute("data-idx"));
+    if(!action && btn.id !== "clearBtn" && btn.id !== "checkoutBtn") return;
+
+    let cart = getCart();
+
+    if(btn.id === "clearBtn"){
+      setCart([]);
+      render();
+      return;
+    }
+
+    if(btn.id === "checkoutBtn"){
+      alert("Demo checkout ✅ (no payment).");
+      return;
+    }
+
+    if(action === "inc"){ cart[idx].qty += 1; }
+    if(action === "dec"){
+      cart[idx].qty -= 1;
+      if(cart[idx].qty <= 0) cart.splice(idx,1);
+    }
+    if(action === "remove"){ cart.splice(idx,1); }
+
+    setCart(cart);
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>
