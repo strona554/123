@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders - LUZARA</title>
+<style>
+  body{margin:0;font-family:Arial;background:#111;color:white;}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;}
+  header a{color:white;text-decoration:none;margin-left:20px;opacity:.9}
+  header a:hover{opacity:1}
+  main{max-width:1000px;margin:0 auto;padding:40px 20px;}
+  .box{border:1px solid #2a2a2a;background:#151515;border-radius:14px;padding:16px;margin:14px 0;}
+  .muted{opacity:.75;font-size:14px}
+  button{padding:10px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:bold;}
+  .btn2{background:#222;color:white;border:1px solid #333;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LUZARA</h1>
+  <div>
+    <a href="./index.html">Home</a>
+    <a href="./cart.html">Cart</a>
+    <a href="./orders.html">Orders</a>
+  </div>
+</header>
+
+<main>
+  <h2>Orders</h2>
+  <p class="muted">Saved on this device only (demo).</p>
+
+  <div id="list"></div>
+
+  <button class="btn2" id="clear">Clear orders</button>
+</main>
+
+<script>
+function getOrders(){ return JSON.parse(localStorage.getItem("orders") || "[]"); }
+function setOrders(o){ localStorage.setItem("orders", JSON.stringify(o)); }
+
+function money(n){ return "$" + Number(n).toFixed(2); }
+
+function render(){
+  const orders = getOrders();
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  if(orders.length === 0){
+    list.innerHTML = `<div class="box"><div class="muted">No orders yet.</div></div>`;
+    return;
+  }
+
+  orders.slice().reverse().forEach(o=>{
+    const itemsHtml = o.items.map(it =>
+      `<div class="muted">• ${it.name} (Size: ${it.size}) x ${it.qty} — ${money(it.price * it.qty)}</div>`
+    ).join("");
+
+    list.innerHTML += `
+      <div class="box">
+        <div><b>Order #${o.id}</b></div>
+        <div class="muted">${new Date(o.date).toLocaleString()}</div>
+        <div class="muted">Customer: ${o.name} • ${o.email}</div>
+        <div style="margin-top:10px">${itemsHtml}</div>
+        <div style="margin-top:10px"><b>Total: ${money(o.total)}</b></div>
+      </div>
+    `;
+  });
+}
+
+document.getElementById("clear").onclick = () => {
+  if(confirm("Clear all orders?")){
+    setOrders([]);
+    render();
+  }
+};
+
+render();
+</script>
+
+</body>
+</html>
