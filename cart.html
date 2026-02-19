@@ -4,23 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cart - LUZARA</title>
+
 <style>
   body{margin:0;font-family:Arial;background:#111;color:white;}
-  header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:black;position:sticky;top:0}
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 40px;background:black;position:sticky;top:0
+  }
   header a{color:white;text-decoration:none;margin-left:20px;opacity:.9}
   header a:hover{opacity:1}
-  main{max-width:900px;margin:0 auto;padding:40px 20px;}
-  .row{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:16px;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:12px;background:#151515;}
+
+  main{max-width:1000px;margin:0 auto;padding:40px 20px;}
+  h2{margin:0 0 10px}
+  .muted{opacity:.75;font-size:14px}
+
+  .row{
+    display:flex;gap:16px;align-items:center;justify-content:space-between;
+    padding:16px;border:1px solid #2a2a2a;border-radius:12px;
+    margin:12px 0;background:#151515;
+  }
   .left{display:flex;gap:14px;align-items:center;}
   img{width:90px;height:90px;object-fit:cover;border-radius:10px;}
-  button{padding:10px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:bold;}
+
+  .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .qty{min-width:28px;text-align:center}
+
+  button{
+    padding:10px 14px;border:0;border-radius:10px;
+    cursor:pointer;font-weight:bold;
+  }
   .btn{background:white;color:black;}
   .btn2{background:#222;color:white;border:1px solid #333;}
-  .muted{opacity:.8;font-size:14px;}
-  .total{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:18px;border-top:1px solid #2a2a2a;}
+  .btn2:hover{background:#2a2a2a}
+  .btn:hover{background:#ddd}
+
+  .totalBox{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:18px;padding-top:18px;border-top:1px solid #2a2a2a;
+  }
+
+  .checkout{
+    margin-top:30px;
+    padding:18px;
+    border:1px solid #2a2a2a;
+    border-radius:14px;
+    background:#151515;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;
+    margin-top:12px;
+  }
+  input, select{
+    width:100%;
+    padding:12px 12px;
+    border-radius:10px;
+    border:1px solid #333;
+    background:#111;
+    color:white;
+    outline:none;
+  }
+  .notice{margin-top:10px; font-size:13px; opacity:.75}
+
   footer{text-align:center;padding:40px;background:black;margin-top:60px;font-size:13px;opacity:.7}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -35,33 +85,80 @@
 
 <main>
   <h2>Your Cart</h2>
-  <p class="muted">Items are saved in your browser.</p>
+  <div class="muted">Items are saved in your browser (localStorage).</div>
 
   <div id="cartList"></div>
 
-  <div class="total">
+  <div class="totalBox">
     <h3>Total</h3>
     <h3 id="totalPrice">$0.00</h3>
   </div>
 
-  <div style="display:flex; gap:12px; margin-top:18px;">
+  <div style="display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;">
     <button class="btn2" id="clearBtn">Clear cart</button>
-    <button class="btn" id="checkoutBtn">Checkout</button>
   </div>
 
-  <p class="muted" style="margin-top:12px;">Checkout is a demo (no payment).</p>
+  <div class="checkout">
+    <h2 style="margin:0;">Checkout (Demo Payment)</h2>
+    <div class="muted">This is not real payment — it only simulates an order.</div>
+
+    <div class="grid">
+      <div>
+        <label class="muted">Full name</label>
+        <input id="name" placeholder="John Smith">
+      </div>
+
+      <div>
+        <label class="muted">Email</label>
+        <input id="email" placeholder="john@email.com">
+      </div>
+
+      <div>
+        <label class="muted">Address</label>
+        <input id="address" placeholder="Street, City, Country">
+      </div>
+
+      <div>
+        <label class="muted">Card number</label>
+        <input id="card" placeholder="1234 5678 9012 3456">
+      </div>
+
+      <div>
+        <label class="muted">Expiry</label>
+        <input id="expiry" placeholder="MM/YY">
+      </div>
+
+      <div>
+        <label class="muted">CVC</label>
+        <input id="cvc" placeholder="123">
+      </div>
+    </div>
+
+    <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+      <button class="btn" id="payBtn">Pay now</button>
+      <button class="btn2" id="fakeBtn">Use test data</button>
+    </div>
+
+    <div class="notice">After “Pay now”, cart will be cleared and you will be redirected to Home.</div>
+  </div>
 </main>
 
 <footer>© 2026 LUZARA</footer>
 
 <script>
-  function getCart(){ return JSON.parse(localStorage.getItem("luzara_cart") || "[]"); }
-  function setCart(cart){ localStorage.setItem("luzara_cart", JSON.stringify(cart)); }
+  // CART STORAGE KEY: "cart"
+  function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
+  function setCart(cart){ localStorage.setItem("cart", JSON.stringify(cart)); }
   function money(n){ return "$" + Number(n).toFixed(2); }
+
+  function updateHeaderCount(){
+    const cart = getCart();
+    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
+  }
 
   function render(){
     const cart = getCart();
-    document.getElementById("cartCount").textContent = cart.reduce((s,i)=>s+i.qty,0);
+    updateHeaderCount();
 
     const list = document.getElementById("cartList");
     list.innerHTML = "";
@@ -81,15 +178,16 @@
       div.className = "row";
       div.innerHTML = `
         <div class="left">
-          <img src="${item.img}" alt="">
+          <img src="${item.img || ''}" alt="">
           <div>
             <div><b>${item.name}</b></div>
             <div class="muted">Size: ${item.size} • ${money(item.price)} each</div>
           </div>
         </div>
-        <div style="display:flex; gap:10px; align-items:center;">
+
+        <div class="actions">
           <button class="btn2" data-action="dec" data-idx="${idx}">-</button>
-          <div style="min-width:28px;text-align:center;">${item.qty}</div>
+          <div class="qty">${item.qty}</div>
           <button class="btn2" data-action="inc" data-idx="${idx}">+</button>
           <button class="btn2" data-action="remove" data-idx="${idx}">Remove</button>
         </div>
@@ -104,14 +202,54 @@
     const btn = e.target.closest("button");
     if(!btn) return;
 
-    if(btn.id === "clearBtn"){ setCart([]); render(); return; }
-    if(btn.id === "checkoutBtn"){ alert("Demo checkout ✅ (no payment)."); return; }
+    // Clear cart
+    if(btn.id === "clearBtn"){
+      setCart([]);
+      render();
+      return;
+    }
 
+    // Fill test data
+    if(btn.id === "fakeBtn"){
+      document.getElementById("name").value = "Test Customer";
+      document.getElementById("email").value = "test@email.com";
+      document.getElementById("address").value = "Test Street 1, City";
+      document.getElementById("card").value = "4242 4242 4242 4242";
+      document.getElementById("expiry").value = "12/30";
+      document.getElementById("cvc").value = "123";
+      return;
+    }
+
+    // Demo pay
+    if(btn.id === "payBtn"){
+      const cart = getCart();
+      if(cart.length === 0){
+        alert("Your cart is empty.");
+        return;
+      }
+
+      const fields = ["name","email","address","card","expiry","cvc"];
+      for(const id of fields){
+        if(!document.getElementById(id).value.trim()){
+          alert("Please fill all checkout fields.");
+          return;
+        }
+      }
+
+      alert("Payment successful ✅ (demo)");
+      setCart([]);
+      render();
+      window.location.href = "./index.html";
+      return;
+    }
+
+    // Quantity buttons
     const action = btn.getAttribute("data-action");
     if(!action) return;
 
     const idx = Number(btn.getAttribute("data-idx"));
     const cart = getCart();
+    if(!cart[idx]) return;
 
     if(action === "inc") cart[idx].qty += 1;
     if(action === "dec"){
